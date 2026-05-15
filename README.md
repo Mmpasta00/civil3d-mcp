@@ -94,4 +94,4 @@ dotnet build
 
 ## License
 
-ISC
+MIT
