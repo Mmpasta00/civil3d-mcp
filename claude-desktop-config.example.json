@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "civil3d": {
+      "command": "node",
+      "args": [
+        "C:/Users/YOUR_USERNAME/Documents/civil3d-mcp/build/index.js"
+      ],
+      "env": {
+        "CIVIL3D_HOST": "localhost",
+        "CIVIL3D_PORT": "8080",
+        "CIVIL3D_COMMAND_TIMEOUT": "120000",
+        "LOG_LEVEL": "info"
+      }
+    }
+  }
+}
