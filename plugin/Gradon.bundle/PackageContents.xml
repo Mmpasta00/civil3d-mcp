@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AutodeskProduct="Civil3D"
+    ProductType="Application"
+    Name="Gradon"
+    Description="Gradon chat agent for Civil 3D"
+    AppVersion="1.0.0"
+    SupportPath="./Contents"
+    Author="Aisle Technologies Inc.">
+  <CompanyDetails Name="Aisle Technologies Inc." Url="https://heygradon.com" Email="hello@heygradon.com" />
+  <Components Description="Gradon for Civil 3D">
+    <!-- Civil 3D 2026 runs on the AutoCAD R25.1 platform. -->
+    <RuntimeRequirements OS="Win64" Platform="Civil3D" SeriesMin="R25.1" SeriesMax="R25.1" />
+    <ComponentEntry
+        AppName="Gradon"
+        ModuleName="./Contents/Civil3dMcpPlugin.dll"
+        AppDescription="Gradon chat palette (GRADON command) + MCP TCP listener"
+        LoadOnAutoCADStartup="True"
+        LoadOnCommandInvocation="False" />
+  </Components>
+</ApplicationPackage>

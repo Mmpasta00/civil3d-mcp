@@ -1,5 +1,6 @@
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Runtime;
+using Autodesk.AutoCAD.Windows;
 using App = Autodesk.AutoCAD.ApplicationServices.Application;
 
 [assembly: ExtensionApplication(typeof(Civil3DMcpPlugin.PluginEntry))]
@@ -14,6 +15,11 @@ namespace Civil3DMcpPlugin;
 /// </summary>
 public sealed class PluginEntry : IExtensionApplication
 {
+  private static readonly Guid GradonPaletteId = new("B6E1A6C4-6F0E-4B8E-9B7E-9C6B9A6E7B31");
+
+  private static PaletteSet? _palette;
+  private static Palette.GradonPaletteControl? _paletteControl;
+
   public void Initialize()
   {
     try
@@ -30,6 +36,38 @@ public sealed class PluginEntry : IExtensionApplication
   public void Terminate()
   {
     PluginRuntime.StopServer();
+    _paletteControl?.Shutdown();
+  }
+
+  /// <summary>Opens (or brings forward) the Gradon chat palette.</summary>
+  [CommandMethod("GRADON")]
+  public void GradonCommand()
+  {
+    if (_palette == null)
+    {
+      _paletteControl = new Palette.GradonPaletteControl();
+      _palette = new PaletteSet("Gradon", GradonPaletteId)
+      {
+        Style = PaletteSetStyles.ShowPropertiesMenu
+          | PaletteSetStyles.ShowAutoHideButton
+          | PaletteSetStyles.ShowCloseButton,
+        MinimumSize = new System.Drawing.Size(320, 480),
+      };
+      _palette.Add("Gradon", _paletteControl);
+      _paletteControl.Initialize();
+    }
+
+    _palette.Visible = true;
+  }
+
+  /// <summary>Tears down the Gradon palette entirely. A later GRADON creates a fresh one.</summary>
+  [CommandMethod("GRADONSTOP")]
+  public void GradonStopCommand()
+  {
+    _paletteControl?.Shutdown();
+    _palette?.Dispose();
+    _palette = null;
+    _paletteControl = null;
   }
 
   /// <summary>Manually start the MCP TCP listener.</summary>

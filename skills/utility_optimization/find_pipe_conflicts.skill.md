@@ -17,7 +17,7 @@ parameters:
 ## Code Template
 
 ```csharp
-double minClearance = MIN_CLEARANCE_FT;
+double minClearance = 1.0; // MIN_CLEARANCE_FT — replace with the caller's value
 string networkFilter = "NETWORK_NAMES"; // empty string = all
 
 var targetNetworkNames = string.IsNullOrWhiteSpace(networkFilter)

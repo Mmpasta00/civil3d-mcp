@@ -20,10 +20,11 @@ public static class CommandDispatcher
     {
       "executeCode" => await ExecuteCodeAsync(parameters),
       "getCivil3DHealth" => await GetHealthAsync(),
+      "getDrawingContext" => await GetDrawingContextAsync(),
 
       _ => throw new JsonRpcDispatchException(
         "CIVIL3D.INVALID_INPUT",
-        $"Unknown method '{method}'. Available: executeCode, getCivil3DHealth"
+        $"Unknown method '{method}'. Available: executeCode, getCivil3DHealth, getDrawingContext"
       ),
     };
   }
@@ -41,17 +42,15 @@ public static class CommandDispatcher
     System.Diagnostics.Debug.WriteLine($"[C3D-MCP] {(readOnly ? "QUERY" : "EXECUTE")}: {description}");
 
     // Execute on Civil 3D main thread with proper document locking
-    return await CivilExecution.ExecuteAsync((doc, civilDoc, db, tr) =>
-    {
-      var context = new ScriptContext(doc, civilDoc, db, tr);
+    // (same code path the Gradon chat agent uses — see ScriptRunner)
+    return await ScriptRunner.ExecuteCodeAsync(code, readOnly);
+  }
 
-      // Run the Roslyn script synchronously within the command context
-      // (we're already on the main thread here)
-      var task = RoslynExecutor.ExecuteAsync(code, context);
-      task.Wait(); // Safe because we're in ExecuteInCommandContextAsync
-
-      return task.Result;
-    }, write: !readOnly);
+  /// <summary>Read-only snapshot of the active drawing (surfaces, alignments, etc).</summary>
+  private static Task<object?> GetDrawingContextAsync()
+  {
+    return CivilExecution.ReadAsync<object?>(
+      (doc, civilDoc, db, tr) => DrawingContext.Capture(doc, civilDoc, db, tr));
   }
 
   /// <summary>Health check — verifies the plugin is alive and Civil 3D is responsive.</summary>

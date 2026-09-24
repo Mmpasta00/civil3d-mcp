@@ -1,0 +1,2432 @@
+[
+  {
+    "Name": "alignment_geometry_report",
+    "Category": "alignments",
+    "Description": "Report every geometry entity (lines, curves, spirals) in an alignment with bearings, radii, and lengths",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "alignments/alignment_geometry_report.skill.md"
+  },
+  {
+    "Name": "apply_station_equation",
+    "Category": "alignments",
+    "Description": "Add a station equation (back station / ahead station jump) to an alignment, e.g. for a match-line or re-stationing",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "rawStationBack",
+        "type": "double",
+        "required": true,
+        "description": "The raw (continuous) station where the equation is inserted"
+      },
+      {
+        "name": "stationAhead",
+        "type": "double",
+        "required": true,
+        "description": "The new station value to assign going forward from that point"
+      },
+      {
+        "name": "equationType",
+        "type": "string",
+        "required": false,
+        "description": "Increasing, Decreasing, or Continuous (default Increasing)"
+      }
+    ],
+    "File": "alignments/apply_station_equation.skill.md"
+  },
+  {
+    "Name": "create_alignment_by_points",
+    "Category": "alignments",
+    "Description": "Create an alignment from a list of tangent points (no polyline needed) using layout entities",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "points",
+        "type": "array",
+        "required": true,
+        "description": "Ordered array of {x, y} points defining the alignment tangents"
+      }
+    ],
+    "File": "alignments/create_alignment_by_points.skill.md"
+  },
+  {
+    "Name": "create_alignment_from_polyline",
+    "Category": "alignments",
+    "Description": "Convert an existing polyline into a Civil 3D alignment",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "polylineHandle",
+        "type": "string",
+        "required": true,
+        "description": "Drawing handle of the source polyline (from select_by_layer or get_selected_objects_summary)"
+      },
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true,
+        "description": "Name for the new alignment"
+      }
+    ],
+    "File": "alignments/create_alignment_from_polyline.skill.md"
+  },
+  {
+    "Name": "delete_alignment",
+    "Category": "alignments",
+    "Description": "Delete an alignment from the drawing by name",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "alignments/delete_alignment.skill.md"
+  },
+  {
+    "Name": "list_alignments",
+    "Category": "alignments",
+    "Description": "List all alignments in the drawing with name, length, start/end stations",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "alignments/list_alignments.skill.md"
+  },
+  {
+    "Name": "reverse_alignment",
+    "Category": "alignments",
+    "Description": "Reverse the direction (start/end) of an existing alignment",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "alignments/reverse_alignment.skill.md"
+  },
+  {
+    "Name": "station_offset",
+    "Category": "alignments",
+    "Description": "Convert between station\u002Boffset and X,Y coordinates along an alignment",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "station",
+        "type": "double",
+        "required": false,
+        "description": "Station value (for station-to-point conversion)"
+      },
+      {
+        "name": "offset",
+        "type": "double",
+        "required": false,
+        "description": "Offset from centerline (for station-to-point)"
+      },
+      {
+        "name": "x",
+        "type": "double",
+        "required": false,
+        "description": "X coordinate (for point-to-station conversion)"
+      },
+      {
+        "name": "y",
+        "type": "double",
+        "required": false,
+        "description": "Y coordinate (for point-to-station conversion)"
+      }
+    ],
+    "File": "alignments/station_offset.skill.md"
+  },
+  {
+    "Name": "count_entities_by_type",
+    "Category": "analyze",
+    "Description": "Count every entity in model space grouped by its AutoCAD/Civil 3D type name \u2014 a quick drawing-content census",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "analyze/count_entities_by_type.skill.md"
+  },
+  {
+    "Name": "detect_pipe_interference",
+    "Category": "analyze",
+    "Description": "True 3D clash detection between pipes and structures across ALL networks (not just same-type gravity crossings) \u2014 flags any two parts closer than a minimum clearance",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "minClearance_ft",
+        "type": "number",
+        "required": true,
+        "description": "Minimum required clearance between outer surfaces, in feet"
+      }
+    ],
+    "File": "analyze/detect_pipe_interference.skill.md"
+  },
+  {
+    "Name": "drawing_units_and_coordinate_system",
+    "Category": "analyze",
+    "Description": "Report the drawing\u0027s linear/angular units, coordinate system code, and insertion scale \u2014 the first thing to check before trusting any coordinate math",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "analyze/drawing_units_and_coordinate_system.skill.md"
+  },
+  {
+    "Name": "earthwork_between_surfaces",
+    "Category": "analyze",
+    "Description": "Full earthwork summary between existing and proposed surfaces, with shrink/swell-adjusted volumes",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "existingSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "proposedSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "shrinkageFactor",
+        "type": "number",
+        "required": false,
+        "description": "Multiplier applied to fill volume to account for compaction (e.g. 1.15 = 15% shrinkage); default 1.0"
+      }
+    ],
+    "File": "analyze/earthwork_between_surfaces.skill.md"
+  },
+  {
+    "Name": "impervious_area_report",
+    "Category": "analyze",
+    "Description": "Sum closed-polyline area per NCS impervious-surface layer (C-BLDG, C-ROAD-SURF, C-PRKG, C-DRWY, C-SWLK, C-IMPV) and report impervious percent of a boundary",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "boundaryHandle",
+        "type": "string",
+        "required": false,
+        "description": "Hex handle of the boundary polyline to compute percent-impervious against; if omitted, the first closed curve found on layer C-PROP is used"
+      }
+    ],
+    "File": "analyze/impervious_area_report.skill.md"
+  },
+  {
+    "Name": "quantity_takeoff_summary",
+    "Category": "analyze",
+    "Description": "Roll up drawing-wide quantities for a plan-check submittal \u2014 pipe lengths by size, structure counts, alignment lengths, surface areas",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "analyze/quantity_takeoff_summary.skill.md"
+  },
+  {
+    "Name": "watershed_analysis",
+    "Category": "analyze",
+    "Description": "Extract watershed (drainage catchment) boundaries from a surface\u0027s slope-direction analysis",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "analyze/watershed_analysis.skill.md"
+  },
+  {
+    "Name": "create_corridor",
+    "Category": "corridors",
+    "Description": "Create a new corridor from an alignment, profile, and named assembly",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "corridorName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "baselineName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "profileName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "assemblyName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "regionName",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "corridors/create_corridor.skill.md"
+  },
+  {
+    "Name": "create_corridor_surface",
+    "Category": "corridors",
+    "Description": "Add a finished-grade TIN surface built from a corridor\u0027s top links",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "corridorName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "corridorSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "dataCodes",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated corridor link/point codes to add as breaklines/points (e.g. \u0022Top\u0022, \u0022Top,Datum\u0022)"
+      }
+    ],
+    "File": "corridors/create_corridor_surface.skill.md"
+  },
+  {
+    "Name": "export_corridor_feature_lines",
+    "Category": "corridors",
+    "Description": "Export a corridor\u0027s feature lines (top of curb, edge of pavement, etc.) as COGO points for a point group",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "corridorName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "corridors/export_corridor_feature_lines.skill.md"
+  },
+  {
+    "Name": "list_corridors_and_baselines",
+    "Category": "corridors",
+    "Description": "List every corridor with its baselines, regions, and assigned assembly",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "corridors/list_corridors_and_baselines.skill.md"
+  },
+  {
+    "Name": "rebuild_all_corridors",
+    "Category": "corridors",
+    "Description": "Rebuild every out-of-date corridor in the drawing",
+    "RequiresWrite": true,
+    "Parameters": [],
+    "File": "corridors/rebuild_all_corridors.skill.md"
+  },
+  {
+    "Name": "set_subassembly_targets",
+    "Category": "corridors",
+    "Description": "Assign a surface as the target for every subassembly in a corridor baseline region (typical daylight/grading target)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "corridorName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "baselineName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "targetSurfaceName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "corridors/set_subassembly_targets.skill.md"
+  },
+  {
+    "Name": "delete_all_of_type",
+    "Category": "delete",
+    "Description": "Erase every entity of a given type from model space (e.g. all point-block references, all leaders) \u2014 a targeted cleanup tool",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "typeName",
+        "type": "string",
+        "required": true,
+        "description": "Class name to match, e.g. Leader, MText, Circle (matches Entity.GetType().Name exactly)"
+      }
+    ],
+    "File": "delete/delete_all_of_type.skill.md"
+  },
+  {
+    "Name": "delete_by_layer",
+    "Category": "delete",
+    "Description": "Erase every entity on a given layer",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "layerName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "delete/delete_by_layer.skill.md"
+  },
+  {
+    "Name": "attach_xref",
+    "Category": "drawing",
+    "Description": "Attach an external DWG as an xref at a given insertion point, scale, and layer",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "xrefPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the DWG to attach"
+      },
+      {
+        "name": "layerName",
+        "type": "string",
+        "required": false,
+        "description": "Layer to place the xref block reference on (default current layer)"
+      },
+      {
+        "name": "insertX",
+        "type": "double",
+        "required": false
+      },
+      {
+        "name": "insertY",
+        "type": "double",
+        "required": false
+      }
+    ],
+    "File": "drawing/attach_xref.skill.md"
+  },
+  {
+    "Name": "create_layout_from_template",
+    "Category": "drawing",
+    "Description": "Create a new paper-space layout by copying a title-block layout from a DWT/DWG template file",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "templatePath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the .dwt/.dwg containing the title-block layout"
+      },
+      {
+        "name": "templateLayoutName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the layout inside the template to copy"
+      },
+      {
+        "name": "newLayoutName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "drawing/create_layout_from_template.skill.md"
+  },
+  {
+    "Name": "create_project_folder_structure",
+    "Category": "drawing",
+    "Description": "Create a firm-standard folder tree on disk for a new project (drawings, survey, correspondence, etc.) from a JSON folder spec",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "rootPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute Windows path for the new project root, e.g. \u0022C:/Projects/2026-Fremont-Site\u0022"
+      },
+      {
+        "name": "folderTreeJson",
+        "type": "string",
+        "required": true,
+        "description": "JSON array of relative subfolder paths, e.g. [\\\u002201-Drawings\\\u0022,\\\u002202-Survey\\\u0022,\\\u002203-Correspondence\\\u0022,\\\u002204-Calcs\\\u0022]"
+      }
+    ],
+    "File": "drawing/create_project_folder_structure.skill.md"
+  },
+  {
+    "Name": "drawing_info",
+    "Category": "drawing",
+    "Description": "Get comprehensive information about the active Civil 3D drawing",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "drawing/drawing_info.skill.md"
+  },
+  {
+    "Name": "extrude_buildings_from_geojson",
+    "Category": "drawing",
+    "Description": "Create 3D solids by extruding each building footprint in a GeoJSON file by its height_ft property, on layer C-BLDG-3D",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "geojsonPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the buildings GeoJSON (Polygon/MultiPolygon features with a height_ft property, project-ft coordinates)"
+      },
+      {
+        "name": "layerName",
+        "type": "string",
+        "required": false,
+        "description": "Layer for the extruded solids (default \u0022C-BLDG-3D\u0022)"
+      }
+    ],
+    "File": "drawing/extrude_buildings_from_geojson.skill.md"
+  },
+  {
+    "Name": "import_gradon_design",
+    "Category": "drawing",
+    "Description": "One-message import of a full Gradon Design handoff folder \u2014 EG/FG surfaces plus every pipe network \u2014 then zooms to extents",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "handoffFolder",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the handoff folder written by the Gradon Design service (e.g. \u0022C:/projects/livermore/handoff\u0022)"
+      },
+      {
+        "name": "egSurfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the imported existing-ground surface (default \u0022EG\u0022)"
+      },
+      {
+        "name": "fgSurfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the imported finished-grade surface (default \u0022FG\u0022)"
+      },
+      {
+        "name": "egStyleName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "fgStyleName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "partsListName",
+        "type": "string",
+        "required": false,
+        "description": "Parts list to assign to every network built from this handoff (default \u0022Standard\u0022)"
+      },
+      {
+        "name": "structureFamily",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "structureSize",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "pipeFamily",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "drawing/import_gradon_design.skill.md"
+  },
+  {
+    "Name": "import_site_intelligence",
+    "Category": "drawing",
+    "Description": "One-message import of a Gradon Site Intelligence export folder -- reads layers.json, inserts export.dxf, extrudes buildings if their GeoJSON is present, then zooms to extents",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "folder",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the Site Intelligence export folder (contains layers.json, export.dxf, and per-layer *.geojson files)"
+      },
+      {
+        "name": "buildingsGeojsonFileName",
+        "type": "string",
+        "required": false,
+        "description": "File name of the buildings GeoJSON inside the folder (default \u0022C-BLDG.geojson\u0022)"
+      }
+    ],
+    "File": "drawing/import_site_intelligence.skill.md"
+  },
+  {
+    "Name": "import_site_intelligence_dxf",
+    "Category": "drawing",
+    "Description": "Insert a Gradon Site Intelligence DXF export into the current drawing (block-insert-and-explode, or as an xref), creating the NCS layers with a monochrome scheme if missing",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "dxfPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the Site Intelligence export.dxf"
+      },
+      {
+        "name": "asXref",
+        "type": "boolean",
+        "required": false,
+        "description": "If true, stage the DXF as a DWG next to it and attach that as an xref instead of inserting/exploding (default false)"
+      },
+      {
+        "name": "insertX",
+        "type": "double",
+        "required": false
+      },
+      {
+        "name": "insertY",
+        "type": "double",
+        "required": false
+      }
+    ],
+    "File": "drawing/import_site_intelligence_dxf.skill.md"
+  },
+  {
+    "Name": "list_layouts_and_viewports",
+    "Category": "drawing",
+    "Description": "List every paper-space layout in the drawing with its viewports, scale, and page setup",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "drawing/list_layouts_and_viewports.skill.md"
+  },
+  {
+    "Name": "purge_and_audit",
+    "Category": "drawing",
+    "Description": "Purge unused named objects (blocks, layers, styles) and run an audit/fix pass on the drawing",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "purgeUnused",
+        "type": "boolean",
+        "required": false,
+        "description": "Purge unused items after auditing (default true)"
+      }
+    ],
+    "File": "drawing/purge_and_audit.skill.md"
+  },
+  {
+    "Name": "save_as_dwg",
+    "Category": "drawing",
+    "Description": "Save the current drawing to a new path/filename (e.g. splitting a working file into a client-deliverable copy)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "outputPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute Windows path for the saved copy, e.g. \u0022C:/projects/livermore/deliverables/Livermore-Grading-v3.dwg\u0022"
+      },
+      {
+        "name": "fileVersion",
+        "type": "string",
+        "required": false,
+        "description": "AutoCAD file version, e.g. Current, AC1032 (2018\u002B); default Current"
+      }
+    ],
+    "File": "drawing/save_as_dwg.skill.md"
+  },
+  {
+    "Name": "set_layer_states",
+    "Category": "drawing",
+    "Description": "Create layers if missing and set color/freeze/lock/plot state for a batch of layers in one call",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "layers",
+        "type": "array",
+        "required": true,
+        "description": "Array of {name, colorIndex, frozen, locked, plottable} \u2014 only provided fields are changed"
+      }
+    ],
+    "File": "drawing/set_layer_states.skill.md"
+  },
+  {
+    "Name": "set_title_block_attributes",
+    "Category": "drawing",
+    "Description": "Set attribute values (sheet title, project number, date, drawn-by, etc.) on a title-block block reference in a layout",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "layoutName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "attributeValues",
+        "type": "array",
+        "required": true,
+        "description": "Array of {tag, value} pairs matching the title block\u0027s attribute tags"
+      }
+    ],
+    "File": "drawing/set_title_block_attributes.skill.md"
+  },
+  {
+    "Name": "set_viewport_scale_and_center",
+    "Category": "drawing",
+    "Description": "Set a paper-space viewport\u0027s scale and pan it to center on a model-space point",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "layoutName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "viewportHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "scale",
+        "type": "number",
+        "required": true,
+        "description": "Plot scale as a factor (e.g. 1/48.0 for 1\u0022=48\u0027)"
+      },
+      {
+        "name": "centerX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "centerY",
+        "type": "double",
+        "required": true
+      }
+    ],
+    "File": "drawing/set_viewport_scale_and_center.skill.md"
+  },
+  {
+    "Name": "export_alignment_report_csv",
+    "Category": "export",
+    "Description": "Export an alignment\u0027s full station/geometry breakdown as CSV text (no file write) for handoff to a spreadsheet or plan-check response",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "stationInterval",
+        "type": "number",
+        "required": false,
+        "description": "Sample interval for coordinate rows (default 100)"
+      }
+    ],
+    "File": "export/export_alignment_report_csv.skill.md"
+  },
+  {
+    "Name": "export_surface_landxml",
+    "Category": "export",
+    "Description": "Export a surface to a LandXML file for handoff to another consultant or software",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "outputPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute Windows path for the output .xml file (e.g. \u0022C:/projects/livermore/EG.xml\u0022)"
+      }
+    ],
+    "File": "export/export_surface_landxml.skill.md"
+  },
+  {
+    "Name": "generate_volume_report",
+    "Category": "export",
+    "Description": "Generate a formatted, plan-check-ready earthwork volume report as text (surfaces, cut/fill, net) for pasting into a submittal letter",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "existingSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "proposedSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "projectName",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "export/generate_volume_report.skill.md"
+  },
+  {
+    "Name": "plot_layout_to_pdf",
+    "Category": "export",
+    "Description": "Plot a paper-space layout to PDF using its existing page setup",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "layoutName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "outputPdfPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute Windows path for the output PDF"
+      }
+    ],
+    "File": "export/plot_layout_to_pdf.skill.md"
+  },
+  {
+    "Name": "publish_data_shortcut",
+    "Category": "export",
+    "Description": "Publish a surface, alignment, or pipe network as a Data Shortcut for other drawings in the project to reference",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "objectName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "objectKind",
+        "type": "string",
+        "required": true,
+        "description": "surface | alignment | pipenetwork"
+      }
+    ],
+    "File": "export/publish_data_shortcut.skill.md"
+  },
+  {
+    "Name": "summarize_gradon_handoff",
+    "Category": "export",
+    "Description": "Read-only summary of a Gradon Design generative-design handoff folder \u2014 lists the files present and returns handoff.md\u0027s content",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "handoffFolder",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the handoff folder written by the Gradon Design service (e.g. \u0022C:/projects/livermore/handoff\u0022)"
+      }
+    ],
+    "File": "export/summarize_gradon_handoff.skill.md"
+  },
+  {
+    "Name": "create_polyline",
+    "Category": "geometry",
+    "Description": "Create a 2D or 3D polyline from a list of vertices",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "vertices",
+        "type": "array",
+        "required": true,
+        "description": "Array of {x, y} or {x, y, z} coordinates"
+      },
+      {
+        "name": "closed",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to close the polyline"
+      },
+      {
+        "name": "layer",
+        "type": "string",
+        "required": false,
+        "description": "Layer name"
+      }
+    ],
+    "File": "geometry/create_polyline.skill.md"
+  },
+  {
+    "Name": "create_polylines_from_geojson",
+    "Category": "geometry",
+    "Description": "Read a GeoJSON file in project-foot coordinates and create closed polylines for Polygon/MultiPolygon rings and open polylines for LineString/MultiLineString geometry, tagged with source XData",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "geojsonPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to a GeoJSON file already in project-ft coordinates (e.g. a Site Intelligence per-layer export fetched with ?crs=project)"
+      },
+      {
+        "name": "layerName",
+        "type": "string",
+        "required": true,
+        "description": "Layer to place every created polyline on"
+      },
+      {
+        "name": "xdataSource",
+        "type": "string",
+        "required": false,
+        "description": "Value stored in the GRADON_SI XData record\u0027s source field (e.g. \\\u0022NAIP 2024\\\u0022)"
+      },
+      {
+        "name": "xdataVintage",
+        "type": "string",
+        "required": false,
+        "description": "Value stored in the GRADON_SI XData record\u0027s vintage field (e.g. \\\u00222024\\\u0022)"
+      }
+    ],
+    "File": "geometry/create_polylines_from_geojson.skill.md"
+  },
+  {
+    "Name": "adjust_finished_grade_offset",
+    "Category": "grading",
+    "Description": "Shift every elevation on a finished-grade feature line up or down by a constant offset (e.g. raising a pad 0.5 ft after a design change)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "featureLineHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "offsetFeet",
+        "type": "number",
+        "required": true,
+        "description": "Positive raises the grade, negative lowers it"
+      }
+    ],
+    "File": "grading/adjust_finished_grade_offset.skill.md"
+  },
+  {
+    "Name": "create_feature_line_from_polyline",
+    "Category": "grading",
+    "Description": "Convert a polyline into a Civil 3D feature line (a 3D-aware grading/design line \u2014 top of wall, ridge, gutter flow line)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "polylineHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "featureLineName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "siteName",
+        "type": "string",
+        "required": false,
+        "description": "Optional site to assign the feature line to"
+      }
+    ],
+    "File": "grading/create_feature_line_from_polyline.skill.md"
+  },
+  {
+    "Name": "create_grading",
+    "Category": "grading",
+    "Description": "Create a daylight/offset grading from a feature line footprint using an existing grading criteria set",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "featureLineHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "criteriaSetName",
+        "type": "string",
+        "required": true,
+        "description": "Name of an existing grading criteria set (e.g. \u0022Basic Set\u0022 or a firm daylight standard)"
+      },
+      {
+        "name": "targetSurfaceName",
+        "type": "string",
+        "required": true,
+        "description": "Surface the grading projects to (existing ground for daylight)"
+      }
+    ],
+    "File": "grading/create_grading.skill.md"
+  },
+  {
+    "Name": "grading_group_list",
+    "Category": "grading",
+    "Description": "List every grading object (daylight/pad grading entities) in the drawing with style and footprint feature line",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "grading/grading_group_list.skill.md"
+  },
+  {
+    "Name": "set_feature_line_elevations",
+    "Category": "grading",
+    "Description": "Set or adjust elevations at specific points along a feature line, or drape the whole line onto a reference surface",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "featureLineHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "required": true,
+        "description": "fromSurface | byIndex"
+      },
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Required if mode = fromSurface"
+      },
+      {
+        "name": "pointElevations",
+        "type": "array",
+        "required": false,
+        "description": "Array of {index, elevation} \u2014 required if mode = byIndex"
+      }
+    ],
+    "File": "grading/set_feature_line_elevations.skill.md"
+  },
+  {
+    "Name": "composite_runoff_coefficient",
+    "Category": "hydrology",
+    "Description": "Compute composite runoff coefficient C from a mix of land cover types within a catchment (weighted by area)",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "covers",
+        "type": "string",
+        "required": true,
+        "description": "JSON array. Each item {type, area_ac, c}. Example \u0022[{\\\u0022type\\\u0022:\\\u0022impervious\\\u0022,\\\u0022area_ac\\\u0022:1.2,\\\u0022c\\\u0022:0.95},{\\\u0022type\\\u0022:\\\u0022lawn\\\u0022,\\\u0022area_ac\\\u0022:0.8,\\\u0022c\\\u0022:0.20}]\u0022"
+      }
+    ],
+    "File": "hydrology/composite_runoff_coefficient.skill.md"
+  },
+  {
+    "Name": "rational_peak_flow",
+    "Category": "hydrology",
+    "Description": "Compute peak runoff Q using the Rational Method (Q = C \u00D7 i \u00D7 A) for a list of catchment areas. Pure calculation \u2014 does not read the drawing.",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "catchments",
+        "type": "string",
+        "required": true,
+        "description": "JSON array of catchments. Each item needs {name, area_ac, c, intensity_in_per_hr}. Example \u0022[{\\\u0022name\\\u0022:\\\u0022Sub-1\\\u0022,\\\u0022area_ac\\\u0022:2.3,\\\u0022c\\\u0022:0.85,\\\u0022intensity_in_per_hr\\\u0022:4.2}]\u0022"
+      }
+    ],
+    "File": "hydrology/rational_peak_flow.skill.md"
+  },
+  {
+    "Name": "add_profile_view_bands",
+    "Category": "labels",
+    "Description": "Add a data band (elevation, station, or profile grade band) to an existing profile view",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "profileViewHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "bandSetStyleName",
+        "type": "string",
+        "required": true,
+        "description": "Name of an existing band set style in the drawing"
+      },
+      {
+        "name": "location",
+        "type": "string",
+        "required": false,
+        "description": "Top or Bottom (default Bottom)"
+      }
+    ],
+    "File": "labels/add_profile_view_bands.skill.md"
+  },
+  {
+    "Name": "assign_label_set",
+    "Category": "labels",
+    "Description": "Apply a label set (bundle of geometry-point, curve, and line labels) to an alignment",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "labelSetName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "labels/assign_label_set.skill.md"
+  },
+  {
+    "Name": "label_alignment_stations",
+    "Category": "labels",
+    "Description": "Add major station labels along an alignment at a fixed interval",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "required": true,
+        "description": "Station labeling interval (e.g. 100 for every 100 ft)"
+      }
+    ],
+    "File": "labels/label_alignment_stations.skill.md"
+  },
+  {
+    "Name": "label_cogo_points",
+    "Category": "labels",
+    "Description": "Assign a point label style to a group of COGO points (controls what text/symbol shows next to each point)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "labelStyleName",
+        "type": "string",
+        "required": true,
+        "description": "Name of an existing point label style in the drawing"
+      }
+    ],
+    "File": "labels/label_cogo_points.skill.md"
+  },
+  {
+    "Name": "label_surface_contours",
+    "Category": "labels",
+    "Description": "Add contour elevation labels along a line drawn across a surface, at a fixed spacing",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "startX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "startY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "endX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "endY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "required": false,
+        "description": "Spacing between labels along the line (drawing units, default 50)"
+      }
+    ],
+    "File": "labels/label_surface_contours.skill.md"
+  },
+  {
+    "Name": "create_parcels_from_closed_polylines",
+    "Category": "parcels",
+    "Description": "Create parcels (lots) from one or more closed polylines in a site",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "siteName",
+        "type": "string",
+        "required": true,
+        "description": "Existing site name to create the parcels in"
+      },
+      {
+        "name": "polylineHandles",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated handles of closed polylines defining lot boundaries"
+      }
+    ],
+    "File": "parcels/create_parcels_from_closed_polylines.skill.md"
+  },
+  {
+    "Name": "delete_parcel_segments",
+    "Category": "parcels",
+    "Description": "Delete a parcel (removing its boundary line/lot from the site) by parcel number",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "siteName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "parcelNumber",
+        "type": "int",
+        "required": true
+      }
+    ],
+    "File": "parcels/delete_parcel_segments.skill.md"
+  },
+  {
+    "Name": "label_parcel_areas",
+    "Category": "parcels",
+    "Description": "Add or reset the area label for every parcel in a site",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "siteName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "parcels/label_parcel_areas.skill.md"
+  },
+  {
+    "Name": "parcel_area_table",
+    "Category": "parcels",
+    "Description": "Report area, perimeter, and number for every parcel in a site",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "siteName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "parcels/parcel_area_table.skill.md"
+  },
+  {
+    "Name": "add_structure_and_pipe",
+    "Category": "pipe_networks",
+    "Description": "Add two structures and the pipe connecting them to an existing gravity network, using named part families/sizes",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "upstreamPoint",
+        "type": "array",
+        "required": true,
+        "description": "{x, y, rimElevation} for the upstream structure"
+      },
+      {
+        "name": "downstreamPoint",
+        "type": "array",
+        "required": true,
+        "description": "{x, y, rimElevation} for the downstream structure"
+      },
+      {
+        "name": "structurePartFamily",
+        "type": "string",
+        "required": true,
+        "description": "Structure part family description from this network\u0027s parts list (see list_parts_lists)"
+      },
+      {
+        "name": "pipePartFamily",
+        "type": "string",
+        "required": true,
+        "description": "Pipe part family description from this network\u0027s parts list"
+      }
+    ],
+    "File": "pipe_networks/add_structure_and_pipe.skill.md"
+  },
+  {
+    "Name": "build_pipe_network_from_json",
+    "Category": "pipe_networks",
+    "Description": "Build a full gravity pipe network (structures \u002B pipes, rims/sumps/inverts, sizes) from a Gradon Design network-\u003Cname\u003E.json handoff file",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "jsonPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the network-\u003Cname\u003E.json handoff file (e.g. \u0022C:/projects/livermore/handoff/network-storm.json\u0022)"
+      },
+      {
+        "name": "partsListName",
+        "type": "string",
+        "required": false,
+        "description": "Parts list to assign to the new network (default \u0022Standard\u0022)"
+      },
+      {
+        "name": "structureFamily",
+        "type": "string",
+        "required": false,
+        "description": "Structure part family description to use for every structure (default the first structure family in the parts list)"
+      },
+      {
+        "name": "structureSize",
+        "type": "string",
+        "required": false,
+        "description": "Part size description within the structure family to use (default the first size in that family)"
+      },
+      {
+        "name": "pipeFamily",
+        "type": "string",
+        "required": false,
+        "description": "Pipe part family description to use for every pipe (default the first pipe family in the parts list)"
+      }
+    ],
+    "File": "pipe_networks/build_pipe_network_from_json.skill.md"
+  },
+  {
+    "Name": "create_pipe_network",
+    "Category": "pipe_networks",
+    "Description": "Create a new empty gravity pipe network, ready for add_structure_and_pipe to populate",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "partsListName",
+        "type": "string",
+        "required": false,
+        "description": "Name of an existing parts list to assign (e.g. \u0022Storm Sewer Parts\u0022)"
+      }
+    ],
+    "File": "pipe_networks/create_pipe_network.skill.md"
+  },
+  {
+    "Name": "create_pipe_network_table",
+    "Category": "pipe_networks",
+    "Description": "Create a pipe or structure schedule table (annotative table entity) for a network, placed at a point in the drawing",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "tableKind",
+        "type": "string",
+        "required": true,
+        "description": "pipe or structure"
+      },
+      {
+        "name": "insertX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "insertY",
+        "type": "double",
+        "required": true
+      }
+    ],
+    "File": "pipe_networks/create_pipe_network_table.skill.md"
+  },
+  {
+    "Name": "delete_pipe_or_structure",
+    "Category": "pipe_networks",
+    "Description": "Delete a single pipe or structure from a network by name",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "partName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "partKind",
+        "type": "string",
+        "required": true,
+        "description": "pipe or structure"
+      }
+    ],
+    "File": "pipe_networks/delete_pipe_or_structure.skill.md"
+  },
+  {
+    "Name": "label_pipes_and_structures",
+    "Category": "pipe_networks",
+    "Description": "Add plan labels to every pipe and structure in a network using the network\u0027s assigned label styles",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "pipe_networks/label_pipes_and_structures.skill.md"
+  },
+  {
+    "Name": "list_parts_lists",
+    "Category": "pipe_networks",
+    "Description": "List every pipe/structure parts list available in the drawing, with part family counts",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "pipe_networks/list_parts_lists.skill.md"
+  },
+  {
+    "Name": "pipe_slope_and_cover_report",
+    "Category": "pipe_networks",
+    "Description": "Full per-pipe report of slope, size, invert elevations, and rim-to-invert depth for an entire network",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "pipe_networks/pipe_slope_and_cover_report.skill.md"
+  },
+  {
+    "Name": "pressure_network_list",
+    "Category": "pipe_networks",
+    "Description": "List pressure pipe networks (water mains) separately from gravity networks, with fitting and appurtenance counts",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "pipe_networks/pressure_network_list.skill.md"
+  },
+  {
+    "Name": "create_cogo_points",
+    "Category": "points",
+    "Description": "Create COGO points from coordinates with optional descriptions",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "points",
+        "type": "array",
+        "required": true,
+        "description": "Array of {easting, northing, elevation, description}"
+      }
+    ],
+    "File": "points/create_cogo_points.skill.md"
+  },
+  {
+    "Name": "create_point_group_by_description",
+    "Category": "points",
+    "Description": "Create a COGO point group whose membership is a raw-description wildcard match (e.g. all \u0022TOPO*\u0022 points)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "descriptionPattern",
+        "type": "string",
+        "required": true,
+        "description": "Wildcard pattern matched against each point\u0027s raw description, e.g. \u0022TOPO*\u0022 or \u0022CB,DI\u0022"
+      }
+    ],
+    "File": "points/create_point_group_by_description.skill.md"
+  },
+  {
+    "Name": "delete_cogo_points_by_group",
+    "Category": "points",
+    "Description": "Delete every COGO point belonging to a specific point group",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "points/delete_cogo_points_by_group.skill.md"
+  },
+  {
+    "Name": "export_cogo_points_csv",
+    "Category": "points",
+    "Description": "Export COGO points (optionally filtered to a point group) as CSV text in the response \u2014 no file write needed",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": false,
+        "description": "Limit export to this point group; omit for all points"
+      }
+    ],
+    "File": "points/export_cogo_points_csv.skill.md"
+  },
+  {
+    "Name": "import_points_from_csv",
+    "Category": "points",
+    "Description": "Import COGO points from CSV text (point#,northing,easting,elevation,description) passed inline \u2014 no file path required",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "csvText",
+        "type": "string",
+        "required": true,
+        "description": "Raw CSV rows, one per point: PN,Northing,Easting,Elevation,Description"
+      },
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": false,
+        "description": "Optional point group to create/add these points into"
+      }
+    ],
+    "File": "points/import_points_from_csv.skill.md"
+  },
+  {
+    "Name": "list_cogo_points",
+    "Category": "points",
+    "Description": "List COGO points in the drawing, optionally filtered by point group",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": false,
+        "description": "Filter by point group name"
+      },
+      {
+        "name": "limit",
+        "type": "int",
+        "required": false,
+        "description": "Max points to return (default 500)"
+      }
+    ],
+    "File": "points/list_cogo_points.skill.md"
+  },
+  {
+    "Name": "set_cogo_point_udp",
+    "Category": "points",
+    "Description": "Set a User-Defined Property (UDP) value on one or more COGO points by point number",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "pointNumbers",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated point numbers, e.g. \u0022101,102,103\u0022"
+      },
+      {
+        "name": "udpName",
+        "type": "string",
+        "required": true,
+        "description": "Name of an existing text/string UDP defined for points in this drawing"
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "points/set_cogo_point_udp.skill.md"
+  },
+  {
+    "Name": "create_design_profile_from_pvis",
+    "Category": "profiles",
+    "Description": "Create a new layout (design) profile on an alignment and add PVIs to define the vertical geometry",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "profileName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "pvis",
+        "type": "array",
+        "required": true,
+        "description": "Ordered array of {station, elevation, curveLength} \u2014 curveLength 0 = no vertical curve at that PVI"
+      }
+    ],
+    "File": "profiles/create_design_profile_from_pvis.skill.md"
+  },
+  {
+    "Name": "create_profile_view",
+    "Category": "profiles",
+    "Description": "Create a profile view (plotted profile grid) for an alignment at a given insertion point",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "insertX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "insertY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "profileViewName",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "profiles/create_profile_view.skill.md"
+  },
+  {
+    "Name": "create_surface_profile",
+    "Category": "profiles",
+    "Description": "Create a profile by sampling an existing ground surface along an alignment",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "profileName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the new profile (default \u0022SurfaceName - AlignmentName\u0022)"
+      }
+    ],
+    "File": "profiles/create_surface_profile.skill.md"
+  },
+  {
+    "Name": "edit_profile_pvi",
+    "Category": "profiles",
+    "Description": "Move or delete a single PVI on an existing layout profile, or insert a new one",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "profileName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "description": "add | remove | move"
+      },
+      {
+        "name": "station",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "elevation",
+        "type": "double",
+        "required": false,
+        "description": "Required for add/move"
+      }
+    ],
+    "File": "profiles/edit_profile_pvi.skill.md"
+  },
+  {
+    "Name": "list_profiles",
+    "Category": "profiles",
+    "Description": "List every profile attached to an alignment (existing ground, design, offset) with station/elevation ranges",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "profiles/list_profiles.skill.md"
+  },
+  {
+    "Name": "drawing_health_check",
+    "Category": "qa",
+    "Description": "Run a multi-point QA scan on the active drawing \u2014 counts surfaces, networks, alignments, broken xrefs, missing styles",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "qa/drawing_health_check.skill.md"
+  },
+  {
+    "Name": "layer_compliance",
+    "Category": "qa",
+    "Description": "Check the drawing against a firm layer-naming standard; report violations (objects on wrong layers, unexpected layer names)",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "allowedPrefixes",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated allowed layer-name prefixes for this firm/project (e.g. \u0022C-,V-,U-\u0022)"
+      }
+    ],
+    "File": "qa/layer_compliance.skill.md"
+  },
+  {
+    "Name": "create_sample_line_group",
+    "Category": "sections",
+    "Description": "Create a sample line group on an alignment \u2014 the container that section-cut sample lines belong to",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "sections/create_sample_line_group.skill.md"
+  },
+  {
+    "Name": "create_sample_lines_by_station_range",
+    "Category": "sections",
+    "Description": "Populate a sample line group with sample lines at a fixed station interval over a range",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "startStation",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "endStation",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "interval",
+        "type": "double",
+        "required": true
+      }
+    ],
+    "File": "sections/create_sample_lines_by_station_range.skill.md"
+  },
+  {
+    "Name": "create_section_views",
+    "Category": "sections",
+    "Description": "Create a section view at each sample line in a group, laid out in a grid for plan-check plotting",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "originX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "originY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "columnSpacing",
+        "type": "double",
+        "required": false,
+        "description": "Horizontal spacing between section views in drawing units (default 100)"
+      },
+      {
+        "name": "rowSpacing",
+        "type": "double",
+        "required": false,
+        "description": "Vertical spacing between rows (default 80)"
+      },
+      {
+        "name": "columns",
+        "type": "int",
+        "required": false,
+        "description": "Section views per row before wrapping (default 5)"
+      }
+    ],
+    "File": "sections/create_section_views.skill.md"
+  },
+  {
+    "Name": "project_objects_to_section_views",
+    "Category": "sections",
+    "Description": "Project nearby drawing objects (utility crossings, easements) onto section views for clash visualization",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "sectionViewHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "objectHandles",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated handles of objects to project (e.g. an offsite pipe not part of the sampled network)"
+      }
+    ],
+    "File": "sections/project_objects_to_section_views.skill.md"
+  },
+  {
+    "Name": "section_volumes",
+    "Category": "sections",
+    "Description": "Compute material (earthwork) volumes along a sample line group between two surfaces using the QTO material list",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "groupName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "alignmentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "existingSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "proposedSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "materialListName",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "File": "sections/section_volumes.skill.md"
+  },
+  {
+    "Name": "find_by_handle",
+    "Category": "select",
+    "Description": "Look up a single object by its drawing handle and return its type, layer, and key geometry/Civil 3D properties",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "handle",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "select/find_by_handle.skill.md"
+  },
+  {
+    "Name": "get_selected_objects_summary",
+    "Category": "select",
+    "Description": "Summarize whatever the engineer currently has selected in the Civil 3D session (type counts, handles, layers)",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "select/get_selected_objects_summary.skill.md"
+  },
+  {
+    "Name": "select_by_layer",
+    "Category": "select",
+    "Description": "Get every entity\u0027s handle and type on a given layer \u2014 the standard way to find object handles for other skills that need one",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "layerName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "select/select_by_layer.skill.md"
+  },
+  {
+    "Name": "select_objects_in_window",
+    "Category": "select",
+    "Description": "Get every entity whose extents fall inside (or cross) a rectangular window \u2014 useful for \u0022everything near this pad\u0022 style queries",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "minX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "minY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "maxX",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "maxY",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "crossingOk",
+        "type": "boolean",
+        "required": false,
+        "description": "true = include entities that only partially overlap the window (default true)"
+      }
+    ],
+    "File": "select/select_objects_in_window.skill.md"
+  },
+  {
+    "Name": "add_boundary_from_polyline",
+    "Category": "surfaces",
+    "Description": "Add an outer or hide boundary to a TIN surface from a closed polyline",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "polylineHandle",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "boundaryType",
+        "type": "string",
+        "required": false,
+        "description": "Outer, Hide, Show, or DataClip (default Outer)"
+      }
+    ],
+    "File": "surfaces/add_boundary_from_polyline.skill.md"
+  },
+  {
+    "Name": "add_breaklines_from_polylines",
+    "Category": "surfaces",
+    "Description": "Add breaklines to a TIN surface from one or more 3D polylines (ridge lines, ditches, curb returns)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "polylineHandles",
+        "type": "string",
+        "required": true,
+        "description": "Comma-separated drawing handles of the source 3D polylines"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": "Label for this breakline set (e.g. \u0022Curb \u0026 gutter\u0022)"
+      }
+    ],
+    "File": "surfaces/add_breaklines_from_polylines.skill.md"
+  },
+  {
+    "Name": "assign_surface_style",
+    "Category": "surfaces",
+    "Description": "Assign an existing surface style (by name) to a surface, e.g. switching from \u0022No display\u0022 to \u0022Contours 2\u0027 and 10\u0027\u0022",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "styleName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/assign_surface_style.skill.md"
+  },
+  {
+    "Name": "create_surface_from_cogo_points",
+    "Category": "surfaces",
+    "Description": "Create a new TIN surface built from a COGO point group (typical topo-to-surface workflow)",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "pointGroupName",
+        "type": "string",
+        "required": true,
+        "description": "Existing point group name; use create_point_group_by_description first if needed"
+      }
+    ],
+    "File": "surfaces/create_surface_from_cogo_points.skill.md"
+  },
+  {
+    "Name": "create_tin_surface",
+    "Category": "surfaces",
+    "Description": "Create a new TIN surface and optionally add 3D points to it",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true,
+        "description": "Name for the new surface"
+      },
+      {
+        "name": "points",
+        "type": "Point3d[]",
+        "required": false,
+        "description": "Array of {x, y, z} points to add"
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": false,
+        "description": "Surface description"
+      }
+    ],
+    "File": "surfaces/create_tin_surface.skill.md"
+  },
+  {
+    "Name": "create_volume_surface",
+    "Category": "surfaces",
+    "Description": "Create a TIN volume surface (cut/fill surface) between two surfaces \u2014 useful for grid/contour volume visualization",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "volumeSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "baseSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "comparisonSurfaceName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/create_volume_surface.skill.md"
+  },
+  {
+    "Name": "extract_contours",
+    "Category": "surfaces",
+    "Description": "Extract contour polylines from a TIN surface at a fixed interval (or a single elevation) as drawing entities",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "interval",
+        "type": "number",
+        "required": false,
+        "description": "Contour interval (e.g. 1.0 ft); omit and use singleElevation instead for one contour"
+      },
+      {
+        "name": "singleElevation",
+        "type": "number",
+        "required": false,
+        "description": "Extract just one contour at this elevation"
+      }
+    ],
+    "File": "surfaces/extract_contours.skill.md"
+  },
+  {
+    "Name": "import_gradon_design_surfaces",
+    "Category": "surfaces",
+    "Description": "Import the existing-ground and finished-grade surfaces from a Gradon Design generative-design handoff folder (EG.xml, grading.xml) in one call",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "handoffFolder",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the handoff folder containing EG.xml and grading.xml (e.g. \u0022C:/projects/livermore/handoff\u0022)"
+      },
+      {
+        "name": "egSurfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the imported existing-ground surface (default \u0022EG\u0022)"
+      },
+      {
+        "name": "fgSurfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the imported finished-grade surface (default \u0022FG\u0022)"
+      },
+      {
+        "name": "egStyleName",
+        "type": "string",
+        "required": false,
+        "description": "Existing surface style to assign to the EG surface, if it already exists in the drawing"
+      },
+      {
+        "name": "fgStyleName",
+        "type": "string",
+        "required": false,
+        "description": "Existing surface style to assign to the FG surface, if it already exists in the drawing"
+      }
+    ],
+    "File": "surfaces/import_gradon_design_surfaces.skill.md"
+  },
+  {
+    "Name": "import_landxml_surface",
+    "Category": "surfaces",
+    "Description": "Import a surface from a LandXML file. Unblocks the external Surface Creation workflow.",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "landXmlPath",
+        "type": "string",
+        "required": true,
+        "description": "Absolute path to the LandXML file on the engineer\u0027s machine (e.g. \u0022C:/projects/livermore/EG.xml\u0022)"
+      },
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name for the new Civil 3D surface (default derived from the file name)"
+      },
+      {
+        "name": "landXmlSurfaceName",
+        "type": "string",
+        "required": false,
+        "description": "Name of the specific surface inside the LandXML file, if it contains more than one"
+      }
+    ],
+    "File": "surfaces/import_landxml_surface.skill.md"
+  },
+  {
+    "Name": "list_surfaces",
+    "Category": "surfaces",
+    "Description": "List all surfaces in the active Civil 3D drawing with name, type, layer, and basic statistics",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "surfaces/list_surfaces.skill.md"
+  },
+  {
+    "Name": "paste_surfaces",
+    "Category": "surfaces",
+    "Description": "Paste (merge) one surface\u0027s data into another, e.g. combining an on-site TIN with an adjacent offsite TIN",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "targetSurfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "sourceSurfaceName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/paste_surfaces.skill.md"
+  },
+  {
+    "Name": "rename_surface",
+    "Category": "surfaces",
+    "Description": "Rename an existing surface",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "currentName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "newName",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/rename_surface.skill.md"
+  },
+  {
+    "Name": "sample_elevations_along_polyline",
+    "Category": "surfaces",
+    "Description": "Sample a surface\u0027s elevation at every vertex/breakpoint along an existing polyline (e.g. a proposed utility trench or trail alignment)",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "polylineHandle",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/sample_elevations_along_polyline.skill.md"
+  },
+  {
+    "Name": "surface_cut_fill_report",
+    "Category": "surfaces",
+    "Description": "Full cut/fill statistics between two surfaces, including shrink/swell-adjusted volumes and factors",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "baseSurface",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "comparisonSurface",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "File": "surfaces/surface_cut_fill_report.skill.md"
+  },
+  {
+    "Name": "surface_elevation",
+    "Category": "surfaces",
+    "Description": "Get the elevation of a surface at a specific X,Y coordinate",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "x",
+        "type": "double",
+        "required": true
+      },
+      {
+        "name": "y",
+        "type": "double",
+        "required": true
+      }
+    ],
+    "File": "surfaces/surface_elevation.skill.md"
+  },
+  {
+    "Name": "surface_volume",
+    "Category": "surfaces",
+    "Description": "Compute cut/fill volumes between two TIN surfaces",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "baseSurface",
+        "type": "string",
+        "required": true,
+        "description": "Name of the base (existing ground) surface"
+      },
+      {
+        "name": "comparisonSurface",
+        "type": "string",
+        "required": true,
+        "description": "Name of the comparison (proposed) surface"
+      }
+    ],
+    "File": "surfaces/surface_volume.skill.md"
+  },
+  {
+    "Name": "check_pipe_cover",
+    "Category": "utility_optimization",
+    "Description": "Find pipes with cover (depth from surface to top of pipe) below a minimum threshold \u2014 flags shallow pipes for resizing or regrading",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the pipe network to check"
+      },
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the reference surface (typically existing or finished grade)"
+      },
+      {
+        "name": "minCover_ft",
+        "type": "number",
+        "required": true,
+        "description": "Minimum required cover in feet (typical: 2.5 for storm, 3.0 for sanitary)"
+      }
+    ],
+    "File": "utility_optimization/check_pipe_cover.skill.md"
+  },
+  {
+    "Name": "export_pipe_network",
+    "Category": "utility_optimization",
+    "Description": "Export every pipe in a network with size, slope, inverts, and connected structures \u2014 ready to feed into the O-Pipes Python sizing pipeline",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true,
+        "description": "Name of the pipe network to export (use list_pipe_networks first)"
+      }
+    ],
+    "File": "utility_optimization/export_pipe_network.skill.md"
+  },
+  {
+    "Name": "find_pipe_conflicts",
+    "Category": "utility_optimization",
+    "Description": "Find vertical conflicts between pipes (utility crossings where clearance is below a threshold) across one or multiple networks",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "minClearance_ft",
+        "type": "number",
+        "required": true,
+        "description": "Minimum vertical clearance required between pipe outer walls in feet (typical 1.0 ft)"
+      },
+      {
+        "name": "networkNames",
+        "type": "string",
+        "required": false,
+        "description": "Comma-separated network names to check; empty = check all gravity networks in the drawing"
+      }
+    ],
+    "File": "utility_optimization/find_pipe_conflicts.skill.md"
+  },
+  {
+    "Name": "list_pipe_networks",
+    "Category": "utility_optimization",
+    "Description": "List all pipe networks in the drawing with pipe and structure counts",
+    "RequiresWrite": false,
+    "Parameters": [],
+    "File": "utility_optimization/list_pipe_networks.skill.md"
+  },
+  {
+    "Name": "resize_pipe",
+    "Category": "utility_optimization",
+    "Description": "Resize a single pipe to a new inner diameter (e.g. upsizing from 12-inch to 18-inch). Modifies the drawing.",
+    "RequiresWrite": true,
+    "Parameters": [
+      {
+        "name": "networkName",
+        "type": "string",
+        "required": true,
+        "description": "Network containing the pipe"
+      },
+      {
+        "name": "pipeName",
+        "type": "string",
+        "required": true,
+        "description": "Pipe to resize (e.g. \u0022Pipe - (5)\u0022)"
+      },
+      {
+        "name": "newInnerDiameter_in",
+        "type": "number",
+        "required": true,
+        "description": "Target inner diameter in inches (e.g. 18 for 18-inch pipe)"
+      }
+    ],
+    "File": "utility_optimization/resize_pipe.skill.md"
+  },
+  {
+    "Name": "earthwork_report",
+    "Category": "workflows",
+    "Description": "Generate a complete earthwork report - iterates alignments, creates profiles from a surface, and computes cut/fill volumes",
+    "RequiresWrite": false,
+    "Parameters": [
+      {
+        "name": "surfaceName",
+        "type": "string",
+        "required": true,
+        "description": "The existing ground surface name"
+      }
+    ],
+    "File": "workflows/earthwork_report.skill.md"
+  }
+]

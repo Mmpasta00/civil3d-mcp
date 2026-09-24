@@ -17,7 +17,7 @@ using System.Text.Json;
 
 string coversJson = "COVERS_JSON";
 
-using var doc = JsonDocument.Parse(coversJson);
+var doc = JsonDocument.Parse(coversJson);
 double totalArea = 0;
 double weightedSum = 0;
 var breakdown = new List<object>();

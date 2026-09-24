@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- AnyCPU (not x64) so `dotnet run` executes directly on an arm64 Mac host, per the
+         explicit instruction to run the checker here. Compilation-only tool — building the
+         actual plugin against Speckle.Civil3D.API still targets x64 in Civil3dMcpPlugin.csproj.
+         On Windows this still runs fine as AnyCPU. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.12.0" />
+    <PackageReference Include="Speckle.Civil3D.API" Version="2026.0.0" />
+  </ItemGroup>
+</Project>

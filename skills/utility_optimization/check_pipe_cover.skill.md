@@ -41,7 +41,7 @@ foreach (ObjectId id in CivilDoc.GetSurfaceIds())
 }
 if (surf == null) return new { error = "Surface not found" };
 
-double minCover = MIN_COVER_FT;
+double minCover = 2.5; // MIN_COVER_FT — replace with the caller's value
 var violations = new List<object>();
 var allPipes = new List<object>();
 

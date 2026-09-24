@@ -17,7 +17,7 @@ using System.Text.Json;
 
 string catchmentsJson = "CATCHMENTS_JSON";
 
-using var doc = JsonDocument.Parse(catchmentsJson);
+var doc = JsonDocument.Parse(catchmentsJson);
 var results = new List<object>();
 double totalQ = 0;
 double totalArea = 0;
